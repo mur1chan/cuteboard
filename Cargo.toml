@@ -1,0 +1,11 @@
+[package]
+name = "dashboard"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-files = "0.6.6"
+actix-web = "4.8.0"
+askama = "0.12.1"
+askama_actix = "0.14.0"
+askama_escape = "0.10.1"
