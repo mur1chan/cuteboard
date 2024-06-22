@@ -15,7 +15,7 @@ struct EditorTemplate;
 
 #[derive(Template)]
 #[template(path = "dashboard.html")]
-struct BaseTemplate<'a> {
+struct DashboardTemplate<'a> {
     cards: &'a str,
 }
 
@@ -28,7 +28,7 @@ async fn hello() -> impl Responder {
         cards_html.push_str(&card.render().unwrap());
     }
 
-    let base = BaseTemplate { cards: &cards_html };
+    let base = DashboardTemplate { cards: &cards_html };
     HttpResponse::Ok().content_type("text/html").body(base.render().unwrap())
 }
 
@@ -43,6 +43,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(Files::new("/static", "./static"))
             .route("/", web::get().to(hello))
+            .route("/editor", web::get().to(editor))
     })
     .bind("127.0.0.1:8000")?
     .run()
