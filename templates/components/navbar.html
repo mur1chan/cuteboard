@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100">
+<div id="navbar" class="navbar bg-base-100">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
@@ -12,13 +12,13 @@
     </div>
   </div>
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl">cuteboard</a>
+    <a class="btn btn-ghost text-xl" href="/">cuteboard</a>
   </div>
   <div class="navbar-end">
 
-    <button class="btn btn-ghost btn-circle">
+    <button class="btn btn-ghost btn-circle" hx-get="/editor" hx-swap="outerHTML" hx-target="#dashboard">
       <div class="indicator">
-          <img src="/static/notes.svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <img src="/static/notes.svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
         
       </div>
     </button>
