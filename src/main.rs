@@ -8,9 +8,13 @@ use actix_files::Files;
 struct CardTemplate<'a> {
     card_title: &'a str,
 }
+#[derive(Template)]
+#[template(path = "editor.html")]
+struct EditorTemplate;
+
 
 #[derive(Template)]
-#[template(path = "base.html")]
+#[template(path = "dashboard.html")]
 struct BaseTemplate<'a> {
     cards: &'a str,
 }
@@ -26,6 +30,11 @@ async fn hello() -> impl Responder {
 
     let base = BaseTemplate { cards: &cards_html };
     HttpResponse::Ok().content_type("text/html").body(base.render().unwrap())
+}
+
+async fn editor() -> impl Responder {
+    let editor = EditorTemplate;
+    HttpResponse::Ok().content_type("text/html").body(editor.render().unwrap())
 }
 
 #[actix_web::main]
