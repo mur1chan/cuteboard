@@ -16,7 +16,7 @@ struct BaseTemplate<'a> {
 }
 
 async fn hello() -> impl Responder {
-    let titles = vec!["Card 1"];
+    let titles = vec!["Blog Entry 1", "Blog Entry 2", "Blog Entry 3", "Blog Entry 4", "Blog Entry 5"];
     let mut cards_html = String::new();
 
     for title in titles {
