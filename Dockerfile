@@ -1,34 +1,29 @@
-# Use a base image with necessary dependencies
+# Stage 1: Build Stage
 FROM rust:latest as builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Cargo.toml and Cargo.lock files
-COPY Cargo.toml Cargo.lock ./
+# Install Git
+RUN apt-get update && apt-get install -y git
 
-# Create an empty dummy project to download dependencies
-RUN mkdir src && \
-    echo "fn main() {}" > src/main.rs && \
-    cargo build --release
+# Clone your Git repository
+RUN git clone https://github.com/yourusername/your-repo.git .
 
-# Copy the rest of the application source code
-COPY . .
-
-# Build the application
+# Build the Rust project
 RUN cargo build --release
 
-# Final stage: Use a smaller base image to reduce the image size
+# Stage 2: Runtime Stage
 FROM debian:buster-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the built binary from the builder stage to the final image
-COPY --from=builder /app/target/release/myapp /app/myapp
+# Copy the built executable from the builder stage
+COPY --from=builder /app/target/release/cuteboard .
 
-# Expose any necessary ports
+# Expose the port your application listens on
 EXPOSE 8080
 
-# Command to run the application
-CMD ["./myapp"]
+# Command to run the executable
+CMD ["./cuteboard"]
