@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y git
 
 # Clone your Git repository
-RUN git clone https://github.com/yourusername/your-repo.git .
+RUN git clone https://github.com/mur1chan/cuteboard.git .
 
 # Build the Rust project
 RUN cargo build --release
