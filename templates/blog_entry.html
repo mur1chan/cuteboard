@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container px-4 grid grid-cols-1 gap-4 py-4 justify-items-center items-center">
+    <div
+        class="prose p-6 bg-white rounded-xl shadow-md max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xll">
+        {{content|safe}}
+    </div>
+</div>
+{% endblock %}

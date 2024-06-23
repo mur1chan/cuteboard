@@ -12,11 +12,11 @@
     </div>
   </div>
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl" href="/">cuteboard</a>
+    <a class="btn btn-ghost text-xl" hx-get="/" hx-swap="innerHTML" hx-target="body">cuteboard</a>
   </div>
   <div class="navbar-end">
 
-    <button class="btn btn-ghost btn-circle" hx-get="/editor" hx-swap="outerHTML" hx-target="#dashboard">
+    <button class="btn btn-ghost btn-circle" hx-get="/editor" hx-swap="innerHTML" hx-target="body">
       <div class="indicator">
           <img src="/static/notes.svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
         

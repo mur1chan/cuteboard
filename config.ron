@@ -1,0 +1,76 @@
+Config(
+headlines: r#"        
+        <h1 class="text-4xl font-bold">Typografie Beispiel 1: Überschriften</h1>
+        <h2 class="text-3xl font-semibold">Überschrift 2</h2>
+        <h3 class="text-2xl font-medium">Überschrift 3</h3>
+        <h4 class="text-xl font-normal">Überschrift 4</h4>
+        <h5 class="text-lg font-light">Überschrift 5</h5>
+        <h6 class="text-base font-thin">Überschrift 6</h6>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Überschriftenstile.</p>"#,
+lists: r#"
+        <h1 class="text-4xl font-bold">Typografie Beispiel 2: Listen</h1>
+        <ul class="list-disc pl-5">
+            <li class="text-lg">Listenpunkt 1</li>
+            <li class="text-lg">Listenpunkt 2</li>
+            <li class="text-lg">Listenpunkt 3</li>
+        </ul>
+        <ol class="list-decimal pl-5">
+            <li class="text-lg">Nummerierte Liste 1</li>
+            <li class="text-lg">Nummerierte Liste 2</li>
+            <li class="text-lg">Nummerierte Liste 3</li>
+        </ol>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Listenstile.</p>"#,
+citations: r#"        
+    <blockquote class="italic border-l-4 border-blue-500 pl-4 text-lg text-gray-700">
+            "Dies ist ein Beispielzitat, um zu zeigen, wie Zitate in TailwindCSS aussehen."
+        </blockquote>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt ein Zitatstil.</p>"#,
+codes: r#"        
+    <h1 class="text-4xl font-bold">Typografie Beispiel 4: Code</h1>
+        <pre class="bg-gray-100 p-4 rounded text-sm">
+    <code class="language-html">
+    &lt;div class="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-md space-y-4 mt-5"&gt;
+        &lt;h1 class="text-4xl font-bold"&gt;Code Beispiel&lt;/h1&gt;
+        &lt;p&gt;Dies ist ein Beispielcodeblock.&lt;/p&gt;
+    &lt;/div&gt;
+    </code>"#,
+highlighting: r#"        
+        <h1 class="text-4xl font-bold">Typografie Beispiel 5: Hervorhebung</h1>
+        <p class="text-lg">
+            Dies ist ein <span class="font-bold">fettgedruckter Text</span>, dies ist ein <span class="italic">kursiver Text</span> und dies ist ein <span class="underline">unterstrichener Text</span>.
+        </p>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Hervorhebungsstile.</p>"#,
+links: r#"        
+        <h1 class="text-4xl font-bold">Typografie Beispiel 6: Links</h1>
+        <p class="text-lg">
+            Dies ist ein <a href="" class="text-blue-500 hover:underline">Beispiellink</a> in einem Absatz.
+        </p>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Links.</p>"#,
+tables: r#"
+        <h1 class="text-4xl font-bold">Typografie Beispiel 7: Tabellen</h1>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 1</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 2</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">Daten 1</td>
+                    <td class="px-6 py-4 whitespace-nowrap">Daten 2</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">Daten 3</td>
+                    <td class="px-6 py-4 whitespace-nowrap">Daten 4</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Tabellen.</p>"#,
+inline_codes: r#"      
+        <h1 class="text-4xl font-bold">Typografie Beispiel 8: Inline Code</h1>
+        <p class="text-lg">
+            Dies ist ein Beispiel für <code class="bg-gray-100 rounded p-1 text-sm">Inline-Code</code> in einem Absatz.
+        </p>
+        <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Inline-Code.</p>"#,
+)

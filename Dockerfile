@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /app/target/release/cuteboard .
 
 # Expose the port your application listens on
-EXPOSE 8080
+EXPOSE 3938
 
 # Command to run the executable
 CMD ["./cuteboard"]

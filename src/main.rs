@@ -1,3 +1,7 @@
+mod config;
+
+use std::collections::HashMap;
+
 use actix_files::Files;
 use actix_htmx::{Htmx, HtmxMiddleware};
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
@@ -8,6 +12,12 @@ use serde::Deserialize;
 #[template(path = "components/card.html")]
 struct CardTemplate<'a> {
     card_title: &'a str,
+}
+
+#[derive(Template)]
+#[template(path = "blog_entry.html")]
+struct BlogEntry {
+    content: String,
 }
 
 #[derive(Template)]
@@ -23,7 +33,7 @@ struct DashboardTemplate<'a> {
 #[derive(Template)]
 #[template(path = "receive_body.html")]
 struct ReceiveBodyTemplate {
-    body: String
+    body: String,
 }
 
 #[derive(Deserialize)]
@@ -46,11 +56,13 @@ async fn hello(htmx: Htmx) -> impl Responder {
         println!("{:?}", htmx.target())
     }
     let titles = vec![
-        "Blog Entry 1",
-        "Blog Entry 2",
-        "Blog Entry 3",
-        "Blog Entry 4",
-        "Blog Entry 5",
+        "Headlines",
+        "Lists",
+        "Citations",
+        "Highlighting",
+        "Links",
+        "Tables",
+        "Inline Codes",
     ];
     let mut cards_html = String::new();
 
@@ -73,8 +85,26 @@ async fn editor() -> impl Responder {
         .body(editor.render().unwrap())
 }
 
+async fn blog_entry(path: web::Path<(String,)>) -> impl Responder {
+    let title = path.0.to_lowercase();
+    let config: HashMap<String, String> = config::read_config()
+        .expect("Failed to read config")
+        .to_map();
+    let content = config.get(&title);
+    println!("This is the content of {}", title);
+    let blog_entry = BlogEntry {
+        content: content.expect("Blog Entry is broken").to_string(),
+    };
+
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(blog_entry.render().unwrap())
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let config = config::read_config().expect("Failed to read config");
+    println!("{:?}", config);
     HttpServer::new(|| {
         App::new()
             .wrap(HtmxMiddleware)
@@ -82,6 +112,7 @@ async fn main() -> std::io::Result<()> {
             .route("/", web::get().to(hello))
             .route("/editor", web::get().to(editor))
             .route("/receive-body", web::post().to(receive_body))
+            .route("/blog-entry/{title}", web::get().to(blog_entry))
     })
     .bind("0.0.0.0:8000")?
     .run()

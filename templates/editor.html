@@ -59,6 +59,9 @@
     </div>
 </div>
 
+<!-- Neuer Container für die Anzeige des empfangenen Inhalts -->
+<div id="display-content" class="mt-4 p-4 border rounded-lg shadow-lg"></div>
+
 <script>
 function app() {
     return {
@@ -92,7 +95,8 @@ function app() {
             })
             .then(response => response.text())
             .then(data => {
-                document.getElementById('response').innerHTML = data;
+                // Den Inhalt im neuen Container anzeigen
+                document.getElementById('display-content').innerHTML = data;
             })
             .catch((error) => {
                 console.error('Error:', error);
