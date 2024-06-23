@@ -1,23 +1,13 @@
-FROM rust:1 AS chef 
-# We only pay the installation cost once, 
-# it will be cached from the second build onwards
-RUN cargo install cargo-chef 
-WORKDIR app
-
-FROM chef AS planner
+FROM rust:1.79 as builder
+WORKDIR /usr/local/src
 COPY . .
-RUN cargo chef prepare  --recipe-path recipe.json
+RUN cargo build --release
+RUN rm -rf target/release/*.*
+RUN find target/release -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 rm -rf 
+RUN mv target/release/* ./app
 
-FROM chef AS builder
-COPY --from=planner /app/recipe.json recipe.json
-# Build dependencies - this is the caching Docker layer!
-RUN cargo chef cook --release --recipe-path recipe.json
-# Build application
-COPY . .
-RUN cargo build --release --bin app
-
-# We do not need the Rust toolchain to run the binary!
-FROM debian:bookworm-slim AS runtime
-WORKDIR app
-COPY --from=builder /app/target/release/app /usr/local/bin
-ENTRYPOINT ["/usr/local/bin/app"]
+FROM debian:buster-slim
+COPY --from=builder /usr/local/src/app /usr/local/bin/app
+COPY ./config /usr/local/bin/config
+WORKDIR /usr/local/bin
+CMD [ "./app" ]
