@@ -485,6 +485,8 @@ dependencies = [
  "askama",
  "askama_actix",
  "askama_escape",
+ "serde",
+ "serde_derive",
 ]
 
 [[package]]
