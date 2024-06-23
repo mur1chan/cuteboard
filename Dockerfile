@@ -8,6 +8,5 @@ RUN mv target/release/* ./app
 
 FROM debian:buster-slim
 COPY --from=builder /usr/local/src/app /usr/local/bin/app
-COPY ./config /usr/local/bin/config
 WORKDIR /usr/local/bin
 CMD [ "./app" ]
