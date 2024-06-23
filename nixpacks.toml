@@ -1,0 +1,11 @@
+[phases.setup]
+pkgs = ["pkg-config", "openssl", "openssl-dev", "libpq-dev"]
+
+[phases.build]
+cmd = "cargo build --release"
+
+[phases.start]
+cmd = "./target/release/cuteboard"
+
+[environment]
+RUST_LOG = "info"
