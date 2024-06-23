@@ -103,8 +103,8 @@ async fn blog_entry(path: web::Path<(String,)>) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let config = config::read_config().expect("Failed to read config");
-    println!("{:?}", config);
+    let current_dir = std::env::current_dir()?;
+    println!("Current directory is: {:?}", current_dir);
     HttpServer::new(|| {
         App::new()
             .wrap(HtmxMiddleware)
