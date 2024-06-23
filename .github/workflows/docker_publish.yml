@@ -32,17 +32,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cargo-
 
-    - name: Build project
-      run: cargo build --release
+    - name: Build Docker image
+      run: |
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/cuteboard:latest --build-arg RUSTC_TARGET=aarch64-unknown-linux-musl
 
     - name: Run tests
-      run: cargo test
+      run: docker run ${{ secrets.DOCKER_USERNAME }}/cuteboard:latest cargo test
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Build Docker image
-      run: docker build . -t ${{ secrets.DOCKER_USERNAME }}/cuteboard:latest
 
     - name: Push Docker image
       run: docker push ${{ secrets.DOCKER_USERNAME }}/cuteboard:latest
