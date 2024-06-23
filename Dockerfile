@@ -5,4 +5,4 @@ WORKDIR /app
 
 RUN nix-shell -p nixpkgs.nixUnstable --run "nix build .#nixpacks -o result"
 
-CMD ["./result/bin/dashboard"]
+CMD ["./result/bin/cuteboard"]
