@@ -18,7 +18,7 @@ COPY . .
 RUN /bin/bash -c "source ${HOME}/.cargo/env && cargo build --release"
 
 # Start a new stage. This is necessary for smaller image size
-FROM alpine:latest
+FROM frolvlad/alpine-glibc
 
 # Add glibc compatibility for Alpine
 RUN apk add gcompat
