@@ -21,7 +21,6 @@ RUN /bin/bash -c "source ${HOME}/.cargo/env && cargo build --release"
 FROM frolvlad/alpine-glibc
 
 # Add glibc compatibility for Alpine
-RUN apk add gcompat
 
 # Set the working directory in the container to /app
 WORKDIR /app
