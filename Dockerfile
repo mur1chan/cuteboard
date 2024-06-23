@@ -1,29 +1,30 @@
-# Stage 1: Build Stage
+# Use the official Rust image as a builder
 FROM rust:latest as builder
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Install Git
-RUN apt-get update && apt-get install -y git
+# Copy the entire project into the container
+COPY . .
 
-# Clone your Git repository
-RUN git clone https://github.com/mur1chan/cuteboard.git .
-
-# Build the Rust project
+# Build the project
 RUN cargo build --release
 
-# Stage 2: Runtime Stage
-FROM debian:buster-slim
+# Use a newer base image for the final output
+FROM debian:bullseye-slim
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the built executable from the builder stage
+# Copy the compiled binary from the builder stage
 COPY --from=builder /app/target/release/cuteboard .
 
-# Expose the port your application listens on
-EXPOSE 3938
+# Copy the templates and static files
+COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/static ./static
 
-# Command to run the executable
+# Expose the port the app runs on
+EXPOSE 2493
+
+# Define the command to run the app
 CMD ["./cuteboard"]
