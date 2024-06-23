@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  my_project:
+    image: mur1chan1/cuteboard:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static
+    environment:
+      RUST_LOG: debug
