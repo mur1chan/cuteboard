@@ -18,7 +18,7 @@ COPY . .
 RUN /bin/bash -c "source ${HOME}/.cargo/env && cargo build --release"
 
 # Start a new stage. This is necessary for smaller image size
-FROM frolvlad/alpine-glibc
+FROM ubuntu:20.04
 
 # Add glibc compatibility for Alpine
 
