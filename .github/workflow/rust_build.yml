@@ -1,0 +1,31 @@
+
+Um eine GitHub Actions Workflow zu erstellen, die dein Rust-Projekt automatisch baut und ausführt, können wir eine YAML-Datei erstellen, die in deinem GitHub-Repository unter dem Verzeichnis .github/workflows gespeichert wird. Diese Workflow-Datei führt Schritte aus, um das Rust-Projekt zu kompilieren und die Release-Build-Datei zu starten. Hier ist ein Beispiel für eine solche GitHub Actions Workflow-Datei:
+
+Beispiel GitHub Actions Workflow für Rust-Projekt
+Erstelle eine Datei mit dem Namen rust_build.yml im Verzeichnis .github/workflows in deinem Repository:
+
+yaml
+Copy code
+name: Rust Build and Run
+
+on:
+  push:
+    branches:
+      - master  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2 
+
+    - name: Set up Rust
+      uses: actions/setup-rust@v2  
+
+    - name: Build Release
+      run: cargo build --release 
+
+    - name: Run Release
+      run: ./target/release/cuteboard
