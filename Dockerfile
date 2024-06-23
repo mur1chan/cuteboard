@@ -13,6 +13,9 @@ RUN cargo build --release --target aarch64-unknown-linux-musl
 # Use a smaller base image for the final output
 FROM alpine:latest
 
+# Add glibc
+RUN apk add gcompat
+
 # Set the working directory
 WORKDIR /app
 
