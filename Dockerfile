@@ -17,7 +17,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the compiled binary from the builder stage
-COPY --from=builder /app/target/aarch64-unknown-linux-musl/release/cureboard .
+COPY --from=builder /app/target/aarch64-unknown-linux-musl/release/cuteboard .
 
 # Copy the templates and static files
 COPY --from=builder /app/templates ./templates
