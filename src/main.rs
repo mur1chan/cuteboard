@@ -114,7 +114,7 @@ async fn main() -> std::io::Result<()> {
             .route("/receive-body", web::post().to(receive_body))
             .route("/blog-entry/{title}", web::get().to(blog_entry))
     })
-    .bind("0.0.0.0:8000")?
+    .bind("0.0.0.0:2423")?
     .run()
     .await
 }
