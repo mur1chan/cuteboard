@@ -88,9 +88,7 @@ async fn editor() -> impl Responder {
 
 async fn blog_entry(path: web::Path<(String,)>) -> impl Responder {
     let title = path.0.to_lowercase();
-    let config: HashMap<String, String> = config::read_config()
-        .expect("Failed to read config")
-        .to_map();
+    let config: HashMap<String, String> = config::get_config().to_map();
     let content = config.get(&title);
     println!("This is the content of {}", title);
     let blog_entry = BlogEntry {
@@ -115,7 +113,7 @@ async fn main() -> std::io::Result<()> {
             .route("/receive-body", web::post().to(receive_body))
             .route("/blog-entry/{title}", web::get().to(blog_entry))
     })
-    .bind("0.0.0.0:2423")?
+    .bind("0.0.0.0:8081")?
     .run()
     .await
 }

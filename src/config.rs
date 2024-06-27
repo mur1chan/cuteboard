@@ -1,8 +1,5 @@
-use std::collections::HashMap;
-use std::io::Read;
-use std::fs::File;
-use ron::from_str;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
     pub headlines: String,
@@ -32,13 +29,137 @@ impl Config {
     }
 }
 
-pub fn read_config() -> Result<Config, Box<dyn std::error::Error>> {
-    let mut file = File::open("config.ron")?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
+pub fn get_config() -> Config {
+    Config {
+    headlines: r#"        
+            <h1 class="text-4xl font-bold">Typografie Beispiel 1: Überschriften</h1>
+            <h2 class="text-3xl font-semibold">Überschrift 2</h2>
+            <h3 class="text-2xl font-medium">Überschrift 3</h3>
+            <h4 class="text-xl font-normal">Überschrift 4</h4>
+            <h5 class="text-lg font-light">Überschrift 5</h5>
+            <h6 class="text-base font-thin">Überschrift 6</h6>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene
+            Überschriftenstile.</p>"#.to_string(),
+    lists: r#"
+            <h1 class="text-4xl font-bold">Typografie Beispiel 2: Listen</h1>
+            <ul class="list-disc pl-5">
+                <li class="text-lg">Listenpunkt 1</li>
+                <li class="text-lg">Listenpunkt 2</li>
+                <li class="text-lg">Listenpunkt 3</li>
+            </ul>
+            <ol class="list-decimal pl-5">
+                <li class="text-lg">Nummerierte Liste 1</li>
+                <li class="text-lg">Nummerierte Liste 2</li>
+                <li class="text-lg">Nummerierte Liste 3</li>
+            </ol>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Listenstile.</p>"#.to_string(),
+    citations: r#"        
+        <blockquote class="italic border-l-4 border-blue-500 pl-4 text-lg text-gray-700">
+                "Dies ist ein Beispielzitat, um zu zeigen, wie Zitate aussehen."
+            </blockquote>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt ein Zitatstil.</p>"#.to_string(),
+    codes: r#"        
+        <h1 class="text-4xl font-bold">Typografie Beispiel 4: Code</h1>
+            <pre class="bg-gray-100 p-4 rounded text-sm">
+        <code class="language-html">
+        &lt;div class="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-md space-y-4 mt-5"&gt;
+            &lt;h1 class="text-4xl font-bold"&gt;Code Beispiel&lt;/h1&gt;
+            &lt;p&gt;Dies ist ein Beispielcodeblock.&lt;/p&gt;
+        &lt;/div&gt;
+        </code>"#.to_string(),
+    highlighting: r#"        
+            <h1 class="text-4xl font-bold">Typografie Beispiel 5: Hervorhebung</h1>
+            <p class="text-lg">
+                Dies ist ein <span class="font-bold">fettgedruckter Text</span>, dies ist ein <span class="italic">kursiver Text</span> und dies ist ein <span class="underline">unterstrichener Text</span>.
+            </p>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Hervorhebungsstile.</p>"#.to_string(),
+    links: r#"        
+            <h1 class="text-4xl font-bold">Typografie Beispiel 6: Links</h1>
+            <p class="text-lg">
+                Dies ist ein <a href="" class="text-blue-500 hover:underline">Beispiellink</a> in einem Absatz.
+            </p>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Links.</p>"#.to_string(),
+    tables: r#"
+            <h1 class="text-4xl font-bold">Typografie Beispiel 7: Tabellen</h1>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 1</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 2</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Daten 1</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Daten 2</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Daten 3</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Daten 4</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Tabellen.</p>"#.to_string(),
+    inline_codes: r#"      
+            <h1 class="text-4xl font-bold">Typografie Beispiel 8: Inline Code</h1>
+            <p class="text-lg">
+                Dies ist ein Beispiel für <code class="bg-gray-100 rounded p-1 text-sm">Inline-Code</code> in einem Absatz.
+            </p>
+            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Inline-Code.</p>"#.to_string(),
+    blog: r#"    
+      <h1 class="text-4xl font-bold">Ein Tag im Leben eines Entwicklers</h1>
+        <p class="text-gray-700 text-sm">Veröffentlicht am 23. Juni 2024 von <a href="" class="text-blue-500 hover:underline">Max Mustermann</a></p>
+        
+        <h2 class="text-3xl font-semibold mt-6">Morgenroutine</h2>
+        <p class="text-lg">Der Tag beginnt früh um <span class="font-bold">6:00 Uhr</span>. Ein schneller Kaffee und eine kurze Überprüfung der Nachrichten sind Teil meiner täglichen Routine.</p>
+        <blockquote class="italic border-l-4 border-blue-500 pl-4 text-lg text-gray-700 my-4">
+            "Der frühe Vogel fängt den Wurm."
+        </blockquote>
+        
+        <h3 class="text-2xl font-medium mt-6">Arbeitstag</h3>
+        <p class="text-lg">Um 8:00 Uhr beginnt der Arbeitstag. Zuerst werden die wichtigsten Aufgaben des Tages geplant:</p>
+        <ul class="list-disc pl-5 mt-2 text-lg">
+            <li>Code-Reviews</li>
+            <li>Feature-Entwicklung</li>
+            <li>Meetings mit dem Team</li>
+        </ul>
+        <p class="mt-4 text-lg">In einem typischen Arbeitstag steht oft das Debuggen von Code im Mittelpunkt. Hier ein Beispiel für einen einfachen Codeausschnitt:</p>
+        <pre class=" rounded text-sm overflow-x-auto">
+    <code class="language-rust">
+    fn main() {
+        println!("Blog");
+    }
+    </code>
+        </pre>
 
-    let config: Config = from_str(&contents)?;
-    let map = config.to_map();
-    println!("{:?}", map.get("lists"));
-    Ok(config)
+        <h3 class="text-2xl font-medium mt-6">Mittagspause</h3>
+        <p class="text-lg">Gegen Mittag gibt es eine kurze Pause. Meistens etwas Einfaches, wie ein <a href="" class="text-blue-500 hover:underline">Sandwich</a> oder ein <a href="" class="text-blue-500 hover:underline">Salat</a>.</p>
+        
+        <h3 class="text-2xl font-medium mt-6">Nachmittagssitzungen</h3>
+        <p class="text-lg">Der Nachmittag ist oft mit Meetings gefüllt. Hier eine Übersicht der heutigen Meetings:</p>
+        <table class="min-w-full divide-y divide-gray-200 mt-4">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Zeit</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Besprechung</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">13:00</td>
+                    <td class="px-6 py-4 whitespace-nowrap">Projektstatus-Update</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">15:00</td>
+                    <td class="px-6 py-4 whitespace-nowrap">Team Brainstorming</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="text-2xl font-medium mt-6">Feierabend</h3>
+        <p class="text-lg">Der Arbeitstag endet gegen 18:00 Uhr. Nach der Arbeit wird oft etwas Freizeit genossen, sei es ein <span class="italic">Spaziergang im Park</span> oder ein <span class="underline">Buch lesen</span>.</p>
+
+        <h3 class="text-2xl font-medium mt-6">Fazit</h3>
+        <p class="text-lg">Ein Tag im Leben eines Entwicklers kann sehr abwechslungsreich sein. Von der frühen Morgenroutine bis zum späten Abend bietet jeder Tag neue Herausforderungen und Möglichkeiten.</p>"#.to_string()
+        }
 }
