@@ -13,6 +13,7 @@ pub struct Config {
     pub links: String,
     pub tables: String,
     pub inline_codes: String,
+    pub blog: String,
 }
 
 impl Config {
@@ -26,6 +27,7 @@ impl Config {
         map.insert("links".to_string(), self.links.clone());
         map.insert("tables".to_string(), self.tables.clone());
         map.insert("inline_codes".to_string(), self.inline_codes.clone());
+        map.insert("blog".to_string(), self.blog.clone());
         map
     }
 }

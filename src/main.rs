@@ -63,6 +63,7 @@ async fn hello(htmx: Htmx) -> impl Responder {
         "Links",
         "Tables",
         "Inline Codes",
+        "Blog",
     ];
     let mut cards_html = String::new();
 
