@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<article class="prose">
+<div class="container px-4 grid grid-cols-1 gap-4 py-4 justify-items-center items-center">
+    <div class="prose p-6 bg-white rounded-xl shadow-md max-w-full sm:max-w-sm md:max-w-md lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
 {{body|safe}}
-</article>
+    </div>
+</div>
 {% endblock %}
