@@ -2,110 +2,23 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
-    pub headlines: String,
-    pub lists: String,
-    pub citations: String,
-    pub codes: String,
-    pub highlighting: String,
-    pub links: String,
-    pub tables: String,
-    pub inline_codes: String,
     pub blog: String,
+    pub kochrezept: String,
+    pub vorlesung: String,
 }
 
 impl Config {
     pub fn to_map(&self) -> HashMap<String, String> {
         let mut map = HashMap::new();
-        map.insert("headlines".to_string(), self.headlines.clone());
-        map.insert("lists".to_string(), self.lists.clone());
-        map.insert("citations".to_string(), self.citations.clone());
-        map.insert("codes".to_string(), self.codes.clone());
-        map.insert("highlighting".to_string(), self.highlighting.clone());
-        map.insert("links".to_string(), self.links.clone());
-        map.insert("tables".to_string(), self.tables.clone());
-        map.insert("inline_codes".to_string(), self.inline_codes.clone());
         map.insert("blog".to_string(), self.blog.clone());
+        map.insert("kochrezept".to_string(), self.kochrezept.clone());
+        map.insert("vorlesung".to_string(), self.vorlesung.clone());
         map
     }
 }
 
 pub fn get_config() -> Config {
     Config {
-    headlines: r#"        
-            <h1 class="text-4xl font-bold">Typografie Beispiel 1: Überschriften</h1>
-            <h2 class="text-3xl font-semibold">Überschrift 2</h2>
-            <h3 class="text-2xl font-medium">Überschrift 3</h3>
-            <h4 class="text-xl font-normal">Überschrift 4</h4>
-            <h5 class="text-lg font-light">Überschrift 5</h5>
-            <h6 class="text-base font-thin">Überschrift 6</h6>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene
-            Überschriftenstile.</p>"#.to_string(),
-    lists: r#"
-            <h1 class="text-4xl font-bold">Typografie Beispiel 2: Listen</h1>
-            <ul class="list-disc pl-5">
-                <li class="text-lg">Listenpunkt 1</li>
-                <li class="text-lg">Listenpunkt 2</li>
-                <li class="text-lg">Listenpunkt 3</li>
-            </ul>
-            <ol class="list-decimal pl-5">
-                <li class="text-lg">Nummerierte Liste 1</li>
-                <li class="text-lg">Nummerierte Liste 2</li>
-                <li class="text-lg">Nummerierte Liste 3</li>
-            </ol>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Listenstile.</p>"#.to_string(),
-    citations: r#"        
-        <blockquote class="italic border-l-4 border-blue-500 pl-4 text-lg text-gray-700">
-                "Dies ist ein Beispielzitat, um zu zeigen, wie Zitate aussehen."
-            </blockquote>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt ein Zitatstil.</p>"#.to_string(),
-    codes: r#"        
-        <h1 class="text-4xl font-bold">Typografie Beispiel 4: Code</h1>
-            <pre class="bg-gray-100 p-4 rounded text-sm">
-        <code class="language-html">
-        &lt;div class="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-md space-y-4 mt-5"&gt;
-            &lt;h1 class="text-4xl font-bold"&gt;Code Beispiel&lt;/h1&gt;
-            &lt;p&gt;Dies ist ein Beispielcodeblock.&lt;/p&gt;
-        &lt;/div&gt;
-        </code>"#.to_string(),
-    highlighting: r#"        
-            <h1 class="text-4xl font-bold">Typografie Beispiel 5: Hervorhebung</h1>
-            <p class="text-lg">
-                Dies ist ein <span class="font-bold">fettgedruckter Text</span>, dies ist ein <span class="italic">kursiver Text</span> und dies ist ein <span class="underline">unterstrichener Text</span>.
-            </p>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt verschiedene Hervorhebungsstile.</p>"#.to_string(),
-    links: r#"        
-            <h1 class="text-4xl font-bold">Typografie Beispiel 6: Links</h1>
-            <p class="text-lg">
-                Dies ist ein <a href="" class="text-blue-500 hover:underline">Beispiellink</a> in einem Absatz.
-            </p>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Links.</p>"#.to_string(),
-    tables: r#"
-            <h1 class="text-4xl font-bold">Typografie Beispiel 7: Tabellen</h1>
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 1</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spalte 2</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">Daten 1</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Daten 2</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">Daten 3</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Daten 4</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Tabellen.</p>"#.to_string(),
-    inline_codes: r#"      
-            <h1 class="text-4xl font-bold">Typografie Beispiel 8: Inline Code</h1>
-            <p class="text-lg">
-                Dies ist ein Beispiel für <code class="bg-gray-100 rounded p-1 text-sm">Inline-Code</code> in einem Absatz.
-            </p>
-            <p class="mt-4 text-gray-700">Dieser Eintrag zeigt den Stil für Inline-Code.</p>"#.to_string(),
     blog: r#"    
       <h1 class="text-4xl font-bold">Ein Tag im Leben eines Entwicklers</h1>
         <p class="text-gray-700 text-sm">Veröffentlicht am 23. Juni 2024 von <a href="" class="text-blue-500 hover:underline">Max Mustermann</a></p>
@@ -160,6 +73,109 @@ pub fn get_config() -> Config {
         <p class="text-lg">Der Arbeitstag endet gegen 18:00 Uhr. Nach der Arbeit wird oft etwas Freizeit genossen, sei es ein <span class="italic">Spaziergang im Park</span> oder ein <span class="underline">Buch lesen</span>.</p>
 
         <h3 class="text-2xl font-medium mt-6">Fazit</h3>
-        <p class="text-lg">Ein Tag im Leben eines Entwicklers kann sehr abwechslungsreich sein. Von der frühen Morgenroutine bis zum späten Abend bietet jeder Tag neue Herausforderungen und Möglichkeiten.</p>"#.to_string()
+        <p class="text-lg">Ein Tag im Leben eines Entwicklers kann sehr abwechslungsreich sein. Von der frühen Morgenroutine bis zum späten Abend bietet jeder Tag neue Herausforderungen und Möglichkeiten.</p>"#.to_string(),
+    kochrezept: r#"
+    <h1 class="text-4xl font-bold">Leckeres Spaghetti Bolognese Rezept</h1>
+    <p class="text-gray-700 text-sm">Veröffentlicht am 23. Juni 2024 von <a href="" class="text-blue-500 hover:underline">Maria Koch</a></p>
+
+    <h2 class="text-3xl font-semibold mt-6">Zutaten</h2>
+    <ul class="list-disc pl-5 mt-2 text-lg">
+        <li>500g Spaghetti</li>
+        <li>300g Rinderhackfleisch</li>
+        <li>1 Zwiebel</li>
+        <li>2 Knoblauchzehen</li>
+        <li>800g stückige Tomaten (aus der Dose)</li>
+        <li>2 EL Tomatenmark</li>
+        <li>Salz und Pfeffer</li>
+        <li>Olivenöl</li>
+        <li>Frischer Basilikum</li>
+        <li>Parmesan</li>
+    </ul>
+
+    <h2 class="text-3xl font-semibold mt-6">Zubereitung</h2>
+    <ol class="list-decimal pl-5 mt-2 text-lg">
+        <li>Spaghetti in reichlich Salzwasser al dente kochen.</li>
+        <li>In einer großen Pfanne das Olivenöl erhitzen und das Hackfleisch darin krümelig anbraten.</li>
+        <li>Zwiebel und Knoblauch fein hacken, zum Fleisch geben und glasig dünsten.</li>
+        <li>Tomatenmark hinzufügen und kurz mit anrösten.</li>
+        <li>Die stückigen Tomaten in die Pfanne geben und alles gut verrühren.</li>
+        <li>Mit Salz und Pfeffer abschmecken und etwa 15 Minuten köcheln lassen.</li>
+        <li>Die fertigen Spaghetti mit der Bolognese-Sauce vermengen und auf Tellern anrichten.</li>
+        <li>Mit frisch geriebenem Parmesan und Basilikumblättern garnieren.</li>
+    </ol>
+
+    <h2 class="text-3xl font-semibold mt-6">Tipps</h2>
+    <p class="text-lg">Für eine besonders aromatische Sauce kann man die Bolognese 1-2 Stunden bei niedriger Hitze köcheln lassen.</p>
+    <blockquote class="italic border-l-4 border-blue-500 pl-4 text-lg text-gray-700 my-4">
+        "Die Liebe zum Kochen beginnt mit dem Verstehen der Zutaten."
+    </blockquote>
+    "#.to_string(),
+
+    vorlesung: r#"
+    <h1 class="text-4xl font-bold">Notizen zur Vorlesung: Kunstgeschichte 101</h1>
+    <p class="text-gray-700 text-sm">Veröffentlicht am 23. Juni 2024 von <a href="" class="text-blue-500 hover:underline">Student Max Mustermann</a></p>
+
+    <h2 class="text-3xl font-semibold mt-6">Themenübersicht</h2>
+    <ul class="list-disc pl-5 mt-3">
+        <li>Einführung in die Kunstgeschichte</li>
+        <li>Die Renaissance: Künstler und ihre Werke</li>
+        <li>Barock und Rokoko: Merkmale und Unterschiede</li>
+        <li>Moderne Kunst: Impressionismus bis Abstrakter Expressionismus</li>
+    </ul>
+
+    <h2 class="text-3xl font-semibold mt-6">Einführung in die Kunstgeschichte</h2>
+    <p class="mt-3">
+        Kunstgeschichte ist das Studium der Entwicklung und Geschichte der Kunstwerke durch die Zeit. Sie befasst sich 
+        mit der Analyse von Gemälden, Skulpturen, Architektur und anderen Kunstformen. Ziel der Kunstgeschichte ist es, 
+        die kulturellen, sozialen und politischen Zusammenhänge der jeweiligen Epoche zu verstehen und die Bedeutung der 
+        Kunstwerke im historischen Kontext zu erfassen.
+    </p>
+
+    <h2 class="text-3xl font-semibold mt-6">Die Renaissance</h2>
+    <p class="mt-3">
+        Die Renaissance war eine kulturelle Bewegung, die im 14. Jahrhundert in Italien begann und sich über ganz Europa 
+        ausbreitete. Sie zeichnete sich durch eine Wiedergeburt des Interesses an der Kunst und Kultur der Antike aus. 
+        Wichtige Künstler dieser Epoche sind Leonardo da Vinci, Michelangelo und Raphael.
+    </p>
+    <blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-3">
+        "Die Renaissance war eine Zeit der Wiederentdeckung und des Experimentierens, in der Künstler wie Leonardo da Vinci 
+        die Grenzen der Kreativität und Technik neu definierten."
+    </blockquote>
+    <figure class="my-6">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" alt="Mona Lisa von Leonardo da Vinci" class="rounded-lg shadow-md w-1/2 mx-auto">
+        <figcaption class="text-sm text-center mt-2 text-gray-600">Abb. 1: Mona Lisa von Leonardo da Vinci</figcaption>
+    </figure>
+
+    <h2 class="text-3xl font-semibold mt-6">Barock und Rokoko</h2>
+    <p class="mt-3">
+        Der Barock ist bekannt für seine dramatische, detaillierte und emotionale Kunst. Er erstreckte sich vom 17. bis zum 
+        Anfang des 18. Jahrhunderts. Das Rokoko folgte als ein verspielter und dekorativer Stil, der vor allem in Frankreich 
+        populär war.
+    </p>
+    <ul class="list-disc pl-5 mt-3">
+        <li>Barock: Dramatik, Detailreichtum, emotionale Intensität</li>
+        <li>Rokoko: Leichtigkeit, Verspieltheit, dekorative Elemente</li>
+    </ul>
+
+    <h2 class="text-3xl font-semibold mt-6">Moderne Kunst</h2>
+    <p class="mt-3">
+        Die Moderne Kunst umfasst zahlreiche Bewegungen, darunter den Impressionismus, den Kubismus und den Abstrakten 
+        Expressionismus. Künstler wie Claude Monet, Pablo Picasso und Jackson Pollock prägten diese Epochen durch ihre 
+        innovative Herangehensweise an Farbe, Form und Technik.
+    </p>
+    <ol class="list-decimal pl-5 mt-3">
+        <li>Impressionismus: Fokus auf Licht und Farbe</li>
+        <li>Kubismus: Zerlegung und Neuordnung von Formen</li>
+        <li>Abstrakter Expressionismus: Ausdruck innerer Emotionen</li>
+    </ol>
+
+    <h2 class="text-3xl font-semibold mt-6">Zusammenfassung</h2>
+    <p class="mt-3">
+        Die Kunstgeschichte bietet einen faszinierenden Einblick in die Entwicklung der menschlichen Kreativität. Von der 
+        Renaissance bis zur modernen Kunst haben Künstler immer wieder neue Wege gefunden, ihre Sicht auf die Welt 
+        darzustellen. Durch das Studium der Kunstgeschichte können wir diese Entwicklungen nachvollziehen und die Bedeutung 
+        der Kunstwerke im Kontext ihrer Zeit besser verstehen.
+    </p>
+    "#.to_string()
         }
 }

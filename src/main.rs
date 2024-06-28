@@ -55,16 +55,7 @@ async fn hello(htmx: Htmx) -> impl Responder {
     if htmx.is_htmx {
         println!("{:?}", htmx.target())
     }
-    let titles = vec![
-        "Headlines",
-        "Lists",
-        "Citations",
-        "Highlighting",
-        "Links",
-        "Tables",
-        "Inline Codes",
-        "Blog",
-    ];
+    let titles = vec!["Blog", "Kochrezept", "Vorlesung"];
     let mut cards_html = String::new();
 
     for title in titles {
