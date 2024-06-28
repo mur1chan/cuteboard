@@ -107,7 +107,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap(HtmxMiddleware)
-            .service(Files::new("/static", "./static"))
+            .service(Files::new("/static", "./static").show_files_listing())
             .route("/", web::get().to(hello))
             .route("/editor", web::get().to(editor))
             .route("/receive-body", web::post().to(receive_body))
